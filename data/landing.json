@@ -1,0 +1,45 @@
+{
+  "hero": {
+    "enable": true,
+    "weight": 10,
+    "template": "hero",
+    "backgroundImage": {
+      "path": "images/templates/hero",
+      "filename": {
+        "desktop": "gradient-desktop.webp",
+        "mobile": "gradient-mobile.webp"
+      }
+    },
+    "badge": {
+      "text": "v0.1.0",
+      "color": "primary",
+      "pill": false,
+      "soft": true
+    },
+    "title": "Backlot Docs",
+    "subtitle": "Backlot is an opinionated framework on top of .NET Core for building API-centric web and back-end systems, powered by our own **Movie Pattern Practice**.",
+    "image": {
+      "path": "images",
+      "filename": "lotus_docs_screenshot.png",
+      "alt": "Lotus Docs Screenshot",
+      "boxShadow": true,
+      "rounded": true
+    },
+    "ctaButton": {
+      "icon": "rocket_launch",
+      "btnText": "Get Started",
+      "url": "/docs/quickstart"
+    },
+    "cta2Button": {
+      "icon": "file_download",
+      "btnText": "Download",
+      "url": "https://github.com/backlot-software/backlot/releases"
+    }
+  },
+  "featureGrid": {
+
+  },
+  "imageCompare": {
+
+  }
+}
