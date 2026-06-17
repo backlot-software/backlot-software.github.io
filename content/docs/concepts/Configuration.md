@@ -1,7 +1,7 @@
 +++
 weight = 100
 date = "2026-06-15"
-draft = true
+draft = false
 author = "Jeroen Wijdven"
 title = "Configuration"
 icon = "rocket_launch"
@@ -9,7 +9,6 @@ toc = true
 publishdate = "2026-06-15"
 +++
 
-# Configuration
 
 In the Chaplin framework it is possible to customize the functionality for your projects using a configuration file.
 

@@ -1,7 +1,7 @@
 +++
 weight = 100
 date = "2026-06-15"
-draft = true
+draft = false
 author = "Jeroen Wijdven"
 title = "Director"
 icon = "rocket_launch"
@@ -9,7 +9,6 @@ toc = true
 publishdate = "2026-06-15"
 +++
 
-# Director
 
 In the movie pattern, the director is like the director of a movie, ensuring everything works together.
 While actors play their roles, the director ensures that the whole performance is cohesive and smooth.

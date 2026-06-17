@@ -1,7 +1,7 @@
 +++
 weight = 100
 date = "2026-06-15"
-draft = true
+draft = false
 author = "Jeroen Wijdven"
 title = "Configuration Manager"
 icon = "rocket_launch"
@@ -9,7 +9,6 @@ toc = true
 publishdate = "2026-06-15"
 +++
 
-# Configuration Manager
 
 This chapter of the documentation covers the configuration and ConfigurationManager of Backlot.
 Backlot has two built-in configuration managers: the `JsonSettingsManager` and the `DuplexConfigurationManager`.

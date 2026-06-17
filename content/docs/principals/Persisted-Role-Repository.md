@@ -1,7 +1,7 @@
 +++
 weight = 100
 date = "2026-06-15"
-draft = true
+draft = false
 author = "Jeroen Wijdven"
 title = "Persisted Role Repository"
 icon = "rocket_launch"
@@ -9,7 +9,6 @@ toc = true
 publishdate = "2026-06-15"
 +++
 
-# Persisted Role Repository
 
 In Backlot, the `PersistedRoleRepository` is a critical component responsible for storing roles that implement the `IPersist` interface.
 This repository ensures that roles persist across application sessions, facilitating data continuity and retrieval.

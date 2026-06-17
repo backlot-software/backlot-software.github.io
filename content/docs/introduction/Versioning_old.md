@@ -1,7 +1,7 @@
 +++
 weight = 100
 date = "2026-06-15"
-draft = true
+draft = false
 author = "Jeroen Wijdven"
 title = "Versioning Old"
 icon = "rocket_launch"
@@ -9,7 +9,6 @@ toc = true
 publishdate = "2026-06-15"
 +++
 
-# Versioning
 
 The versioning of Chaplin and all implementations of Chaplin uses [Semantic Versioning (SemVer)][1] to version the projects.
 This page contains a global explanation of SemVer and how to use it with Chaplin projects and other implementations of Chaplin.

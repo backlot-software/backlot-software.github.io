@@ -1,7 +1,7 @@
 +++
 weight = 100
 date = "2026-06-15"
-draft = true
+draft = false
 author = "Jeroen Wijdven"
 title = "JMeter"
 icon = "rocket_launch"
@@ -9,7 +9,6 @@ toc = true
 publishdate = "2026-06-15"
 +++
 
-# JMeter
 
 With JMeter it is possible to test scenarios with multiple virtual users. For the official documentation go to: [JMeter documentation](https://jmeter.apache.org/usermanual/get-started.html).
 

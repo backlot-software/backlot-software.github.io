@@ -1,7 +1,7 @@
 +++
 weight = 100
 date = "2026-06-15"
-draft = true
+draft = false
 author = "Jeroen Wijdven"
 title = "Scenarios"
 icon = "rocket_launch"
@@ -9,7 +9,6 @@ toc = true
 publishdate = "2026-06-15"
 +++
 
-# Scenarios
 
 A scenario is a combination of actions being performed following a script. In the Chaplin framework we call these actions compositions. A scenario can be played by calling its endpoint or  programmatically by a play method on the playing actor.
 

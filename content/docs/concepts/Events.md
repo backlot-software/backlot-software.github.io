@@ -1,7 +1,7 @@
 +++
 weight = 100
 date = "2026-06-15"
-draft = true
+draft = false
 author = "Jeroen Wijdven"
 title = "Events"
 icon = "rocket_launch"
@@ -9,7 +9,6 @@ toc = true
 publishdate = "2026-06-15"
 +++
 
-# Events
 
 Events play a critical role in the Backlot framework by enabling the decoupling of actions and allowing different components to respond to specific moments in a scenario’s lifecycle.
 In the Movie pattern metaphor we call this `Watching`.

@@ -1,7 +1,7 @@
 +++
 weight = 100
 date = "2026-06-15"
-draft = true
+draft = false
 author = "Jeroen Wijdven"
 title = "Logging and Exception Handling"
 icon = "rocket_launch"
@@ -10,7 +10,6 @@ publishdate = "2026-06-15"
 +++
 
 
-# Logging and Exception Handling
 
 We make use of structured logging. Below is an overview of the logging practices and guidelines used in this context.
 

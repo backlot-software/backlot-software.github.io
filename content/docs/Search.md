@@ -1,7 +1,7 @@
 +++
 weight = 100
 date = "2026-06-15"
-draft = true
+draft = false
 author = "Jeroen Wijdven"
 title = "Search"
 icon = "rocket_launch"
@@ -9,7 +9,6 @@ toc = true
 publishdate = "2026-06-15"
 +++
 
-# Search
 
 Backlot on itself is not a search engine nor is it a database. While some concepts are similar, Backlot is not an ORM framework.
 For these concepts we advise you to look at EntityFramework, SqlKata, Dapper etc. Because a lot of entities are handled within Backlot

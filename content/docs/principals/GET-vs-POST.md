@@ -1,7 +1,7 @@
 +++
 weight = 100
 date = "2026-06-15"
-draft = true
+draft = false
 author = "Jeroen Wijdven"
 title = "Get Vs Post"
 icon = "rocket_launch"
@@ -9,7 +9,6 @@ toc = true
 publishdate = "2026-06-15"
 +++
 
-# GET vs. POST
 
 Backlot provides two primary HTTP endpoint methods, GET and POST, for interacting with roles.
 These endpoint methods allow you to either use new role data or execute scenarios using already persisted roles.

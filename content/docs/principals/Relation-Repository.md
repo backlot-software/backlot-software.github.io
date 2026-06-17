@@ -1,7 +1,7 @@
 +++
 weight = 100
 date = "2026-06-15"
-draft = true
+draft = false
 author = "Jeroen Wijdven"
 title = "Relation Repository"
 icon = "rocket_launch"
@@ -9,7 +9,6 @@ toc = true
 publishdate = "2026-06-15"
 +++
 
-# Relation Repository
 
 The Relation Repository is responsible for storing and retrieving relationships between roles.
 A relation refers to a connection between two roles.

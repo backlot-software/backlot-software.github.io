@@ -1,7 +1,7 @@
 +++
 weight = 100
 date = "2026-06-15"
-draft = true
+draft = false
 author = "Jeroen Wijdven"
 title = "Performance"
 icon = "rocket_launch"
@@ -9,7 +9,6 @@ toc = true
 publishdate = "2026-06-15"
 +++
 
-# Performance
 
 Performance is an important part of Chaplin. We use two tools for testing the performance of Chaplin. Namely: JMeter and DotTrace. With JMeter it is possible to test scenarios and with dotTrace it is possible to profile the code. 
 

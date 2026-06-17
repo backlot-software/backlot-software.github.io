@@ -1,7 +1,7 @@
 +++
 weight = 100
 date = "2026-06-15"
-draft = true
+draft = false
 author = "Jeroen Wijdven"
 title = "Unit Of Work"
 icon = "rocket_launch"
@@ -9,7 +9,6 @@ toc = true
 publishdate = "2026-06-15"
 +++
 
-# Unit of Work
 
 The Unit of Work pattern is a central concept in ensuring that data manipulation operations are coordinated and handled as a single transaction.
 This is especially critical in systems where multiple related operations must succeed or fail together, maintaining data integrity and consistency.

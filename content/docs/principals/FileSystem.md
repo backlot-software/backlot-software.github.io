@@ -1,7 +1,7 @@
 +++
 weight = 100
 date = "2026-06-15"
-draft = true
+draft = false
 author = "Jeroen Wijdven"
 title = "FileSystem"
 icon = "rocket_launch"
@@ -9,7 +9,6 @@ toc = true
 publishdate = "2026-06-15"
 +++
 
-# FileSystem
 
 In the Backlot application, filesystem management is crucial for handling various types of data storage.
 Two primary filesystem implementations, `LocalDiskStorage` and `BlobStorage`, are provided to accommodate different storage needs.

@@ -1,7 +1,7 @@
 +++
 weight = 100
 date = "2026-06-15"
-draft = true
+draft = false
 author = "Jeroen Wijdven"
 title = "Instructors"
 icon = "rocket_launch"
@@ -9,7 +9,6 @@ toc = true
 publishdate = "2026-06-15"
 +++
 
-# Instructors
 
 In Backlot, instructors play a crucial role in ensuring that actors can properly assume their designated roles.
 Sometimes, an actor may not be immediately ready to take on a role due to specific requirements or configurations needed by the role.

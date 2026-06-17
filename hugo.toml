@@ -1,4 +1,4 @@
-baseURL = 'http://docs.backlot.software/'
+baseURL = 'https://docs.backlot.software/'
 languageCode = 'en-us'
 title = 'Backlot documentation'
 
@@ -18,3 +18,11 @@ title = 'Backlot documentation'
     url = "/docs/"
     identifier = "docs"
     weight = 10
+
+[params.docs]
+    darkMode    = true
+    editPage    = true
+    repoURL     = "https://github.com/backlot-software/backlot-software.github.io"
+    repoBranch  = "main"
+    lastMod     = true
+    lastModRelative = true

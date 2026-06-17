@@ -1,7 +1,7 @@
 +++
 weight = 100
 date = "2026-06-15"
-draft = true
+draft = false
 author = "Jeroen Wijdven"
 title = "Director Configuration"
 icon = "rocket_launch"
@@ -9,7 +9,6 @@ toc = true
 publishdate = "2026-06-15"
 +++
 
-# Director configuration
 
 In the Backlot framework, the `Director` class is a central component responsible for orchestrating the behavior of various components and scenarios within an application.
 This chapter provides an in-depth explanation of the `Director` class, detailing its configuration and usage.

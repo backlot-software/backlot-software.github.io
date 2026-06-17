@@ -1,7 +1,7 @@
 +++
 weight = 100
 date = "2026-06-15"
-draft = true
+draft = false
 author = "Jeroen Wijdven"
 title = "Versioning"
 icon = "rocket_launch"
@@ -9,7 +9,6 @@ toc = true
 publishdate = "2026-06-15"
 +++
 
-# Versioning
 
 Versioning is crucial in managing and maintaining software projects, ensuring that changes are systematically tracked and communicated.
 In Backlot, we follow a structured versioning scheme inspired by Semantic Versioning to provide clear and consistent updates.

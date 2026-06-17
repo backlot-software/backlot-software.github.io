@@ -1,7 +1,7 @@
 +++
 weight = 100
 date = "2026-06-15"
-draft = true
+draft = false
 author = "Jeroen Wijdven"
 title = "Getting Started"
 icon = "rocket_launch"
@@ -9,7 +9,6 @@ toc = true
 publishdate = "2026-06-15"
 +++
 
-# Getting Started
 
 ## Solution Setup
 
@@ -80,3 +79,7 @@ A Backlot server can be ordered and setup at our hosting partner. Self hosting i
 
   [1]: https://3.basecamp.com/3094795/buckets/24365546/vaults/6033645375
   [2]: https://codevelo.us/category/software-development/Backlot/
+
+# Visual explanation
+
+![backlotflow.png](https://backlot-software.github.io/images/backlotflow.png)
