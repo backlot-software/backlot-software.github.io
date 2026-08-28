@@ -14,7 +14,7 @@ publishdate = "2026-06-15"
 
 When a Backlot server is ordered a default Backlot solution is created which you can clone from the given git repository. Containing the latest package versions of Backlot. Clone this git repository and add your own code. The basic folder structure for applications is:
 
-<code-block>
+```
 ├── Yourname.Backlot.Server
 │   ├── Director.cs
 │   ├── Runner.cs
@@ -22,7 +22,7 @@ When a Backlot server is ordered a default Backlot solution is created which you
 ├── Yourname.Backlot
 │   ├── Scenarios
 │   └── Roles
-</code-block>
+```
 
 For more complex scenarios developers are free to choose another structure. The files and folders explained:
 
@@ -78,7 +78,7 @@ A Backlot server can be ordered and setup at our hosting partner. Self hosting i
 
 
   [1]: https://3.basecamp.com/3094795/buckets/24365546/vaults/6033645375
-  [2]: https://codevelo.us/category/software-development/Backlot/
+  [2]: https://codevelo.us
 
 # Visual explanation
 
