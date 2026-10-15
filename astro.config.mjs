@@ -6,11 +6,12 @@ import mermaid from 'astro-mermaid';
 
 // https://astro.build/config
 export default defineConfig({
+	site: 'https://docs.backlot.software',
 	integrations: [
-				    mermaid({
-      theme: 'dark',
-      autoTheme: true
-    }),
+		mermaid({
+			theme: 'dark',
+			autoTheme: true
+		}),
 		starlight({
 			title: 'Backlot Docs',
 			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/backlot-software' }],
