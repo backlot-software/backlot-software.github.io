@@ -57,7 +57,7 @@ We welcome contributions to improve the Backlot documentation! To contribute, pl
     ```bash
     git push origin feature/your-feature-name
     ```
-7.  **Open a Pull Request** against the `main` branch of this repository. Your pull request will be reviewed and merged.
+7.  **Open a Pull Request** against the `develop` branch of this repository. Your pull request will be reviewed and merged.
 
 ### Documentation Structure
 
