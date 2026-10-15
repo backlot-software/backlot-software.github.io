@@ -1,0 +1,191 @@
+---
+title: Program.cs
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+When you start an Azure Functions project, a `Program.cs` file is automatically generated.
+The `Main` function in this file serves as the entry point for the application.
+
+The primary responsibilities of the `Program.cs` is to:
+
+1. Configure middleware components.
+2. Set up the Backlot director and its dependencies.
+3. Configure logging services.
+4. Build and run the host.
+
+## Host Builder Configuration
+
+The `HostBuilder` is used to configure and build the application host.
+The `ConfigureFunctionsWorkerDefaults` method is called to set up the default function worker, incorporating several middleware components:
+
+- `AutofacScopeExecutor`: Ensures that Autofac is identified first for dependency injection.
+- `Defender`: Provides defense mechanisms to check for the presence of specific forbidden keywords, and if found, it returns a BadRequest response with a message.
+- `AuthenticationInitializer`: Sets up authentication processes.
+- `SerilogContextEnrichment`: Enhances logging with Serilog by adding contextual information.
+
+```csharp
+var host = new HostBuilder()
+    .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+    .ConfigureFunctionsWorkerDefaults(worker =>
+    {
+        worker.UseMiddleware<FunctionsHttpMiddleware<AutofacScopeExecutor>>(); // always identify Autofac first.
+        worker.UseMiddleware<FunctionsHttpMiddleware<Defender>>();
+        worker.UseMiddleware<FunctionsHttpMiddleware<AuthenticationInitializer>>();
+        worker.UseMiddleware<FunctionsHttpMiddleware<SerilogContextEnrichment>>();
+    })
+```
+
+## Application Configuration with Backlot
+
+The `ConfigureBacklotWeb<TDirector>` extension method (namespace `Backlot.Http.DependencyInjection.Autofac`) configures the host using Backlot-specific services.
+It registers the default Autofac container and the media formatters, and calls a factory to create your director.
+The factory receives the `IConfiguration` and the Autofac `ContainerBuilder`.
+
+The repositories, the unit of work and the secret are not passed to this method.
+They are defined by the [director](./director-configuration.md): the repositories and unit of work are its type arguments, and the secret is its `SecretKey` property.
+
+1. **Repository Initialization**
+
+   <Tabs>
+     <TabItem label="Memory Repositories">
+       Use `MemoryRelationRepository`, `MemoryPersistedRoleRepository`, and `DummyUnitOfWork` as type arguments of the director.
+
+       ```csharp
+       public class Director(IFileSystem fileSystem, IConfigurationManager configurationManager, ContainerBuilder builder)
+           : AutofacContainerDirector<
+               MemoryRelationRepository,
+               MemoryPersistedRoleRepository,
+               DummyUnitOfWork,
+               BasicUserContext,
+               CacheFactory>(fileSystem, configurationManager, builder)
+       ```
+     </TabItem>
+     <TabItem label="RavenDB Repositories">
+       Use `RavenRelationRepository`, `RavenPersistedRoleRepository`, and `RavenUnitOfWork` (namespace `Backlot.Services.RavenDb`) to integrate RavenDB.
+
+       ```csharp
+       public class Director(IFileSystem fileSystem, IConfigurationManager configurationManager, ContainerBuilder builder)
+           : AutofacContainerDirector<
+               RavenRelationRepository,
+               RavenPersistedRoleRepository,
+               RavenUnitOfWork,
+               BasicUserContext,
+               CacheFactory>(fileSystem, configurationManager, builder)
+       ```
+     </TabItem>
+   </Tabs>
+
+2. **File System Initialization**
+
+   <Tabs>
+     <TabItem label="LocalDiskStorage">
+       The file system initialized using `LocalDiskStorage`.
+
+       ```csharp
+       var fs = new LocalDiskStorage();
+       ```
+     </TabItem>
+     <TabItem label="BlobStorage">
+       The file system initialized using `BlobStorage` (namespace `Backlot.Services.Filesystem.BlobStorage`) can be initialized with a connection string from the configuration.
+       The key name is up to you; `Backlot.BlobConnectionString` is used here.
+
+       ```csharp
+       var fs = new BlobStorage(configuration["Backlot.BlobConnectionString"]);
+       ```
+     </TabItem>
+   </Tabs>
+
+3. **Configuration Manager Initialization**
+
+   The configuration manager is initialized with a `JsonSettingsManager` and a `DuplexConfigurationSettingsManager`, managing settings from both JSON files and the application configuration.
+
+    ```csharp
+    var jsonSettingsManager = new JsonSettingsManager(configuration["Backlot.Environment"] ?? "local", fs);
+    var duplexSettingsManager = new DuplexConfigurationSettingsManager(configuration, jsonSettingsManager);
+    ```
+
+4. **Director Introduction**
+
+   The director is created, combining the file system, configuration manager, and builder.
+
+    ```csharp
+    return new Director(fs, duplexSettingsManager, builder);
+    ```
+
+```csharp
+.ConfigureBacklotWeb((configuration, builder) =>
+{
+    var fs = new LocalDiskStorage();
+    var jsonSettingsManager = new JsonSettingsManager(configuration["Backlot.Environment"] ?? "local", fs);
+    var duplexSettingsManager = new DuplexConfigurationSettingsManager(configuration, jsonSettingsManager);
+    return new Director(fs, duplexSettingsManager, builder);
+})
+```
+
+## Logging Configuration with Serilog
+
+Logging is configured using Serilog. The configuration ensures that logs are written to the console and allows for additional logging targets, such as Azure Table Storage.
+
+```csharp
+.ConfigureServices((ctx, collection) => {
+    collection.AddLogging(lb => lb
+        .AddSerilog(ctx.Configuration,
+            cfg => cfg.WriteTo.Console(),
+            level: LogEventLevel.Debug
+        )
+    );
+})
+```
+
+## Building and Running the Host
+
+Finally, the host is built and run asynchronously, marking the culmination of the configuration process and the start of the application's execution.
+
+```csharp
+.Build();
+
+await host.RunAsync();
+```
+
+## Complete Backlot Program.cs
+
+Here's how the Backlot configuration looks when using the `Director` with RavenDB repositories and BlobStorage as the file system:
+
+```csharp
+namespace Backlot.Server
+{
+    public static class Program
+    {
+        public static async Task Main()
+        {
+            var host = new HostBuilder()
+                .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+                .ConfigureFunctionsWorkerDefaults(worker =>
+                {
+                    worker.UseMiddleware<FunctionsHttpMiddleware<AutofacScopeExecutor>>();
+                    worker.UseMiddleware<FunctionsHttpMiddleware<Defender>>();
+                    worker.UseMiddleware<FunctionsHttpMiddleware<AuthenticationInitializer>>();
+                    worker.UseMiddleware<FunctionsHttpMiddleware<SerilogContextEnrichment>>();
+                })
+                .ConfigureBacklotWeb((configuration, builder) =>
+                {
+                    var fs = new BlobStorage(configuration["Backlot.BlobConnectionString"]);
+                    var jsonSettingsManager = new JsonSettingsManager(configuration["Backlot.Environment"] ?? "local", fs);
+                    var duplexSettingsManager = new DuplexConfigurationSettingsManager(configuration, jsonSettingsManager);
+                    return new Director(fs, duplexSettingsManager, builder);
+                })
+                .ConfigureServices((ctx, collection) => { collection.AddLogging(lb => lb
+                        .AddSerilog(ctx.Configuration,
+                            cfg => cfg.WriteTo.AzureTableStorage(ctx.Configuration["Backlot.BlobConnectionString"]),
+                            level: LogEventLevel.Debug
+                        )
+                    );
+                })
+                .Build();
+
+            await host.RunAsync();
+        }
+    }
+}
+```
