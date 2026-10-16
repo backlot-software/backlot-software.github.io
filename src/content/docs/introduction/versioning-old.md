@@ -52,7 +52,7 @@ When a new project is made the project file should have propertyGroups that shou
 </PropertyGroup>
 ```
 
-*** When using the Backlot build script versions are automatically managed in all .csproj files ***
+_**When using the Backlot build script versions are automatically managed in all .csproj files**_
 
 ## Examples
 
