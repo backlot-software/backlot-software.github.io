@@ -14,9 +14,7 @@
   "jsdoc": true,
   "sortTailwindcss": {
     "stylesheet": "src/styles/global.css",
-    "attributes": [
-      "class"
-    ],
+    "attributes": ["class"],
     "preserveWhitespace": false
   },
   "astro": {

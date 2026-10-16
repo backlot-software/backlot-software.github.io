@@ -31,7 +31,7 @@ new Criteria()
 {
     Field = "Info", // the name of the role property it's advisable to use nameof(Role.Info)
     Condition = "ct", // eq = equals, ct = contains, gt = greater than, lt = less than,
-    Value = "world" 
+    Value = "world"
 }
 ```
 
@@ -102,7 +102,7 @@ new Criteria()
 {
     Field = nameof(IMyFreeTextRole.FreeTextSearchIndex),
     Condition = "ct",
-    Value = "search value" 
+    Value = "search value"
 }
 ```
 

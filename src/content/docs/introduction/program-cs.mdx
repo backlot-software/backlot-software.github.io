@@ -45,69 +45,73 @@ The factory receives the `IConfiguration` and the Autofac `ContainerBuilder`.
 The repositories, the unit of work and the secret are not passed to this method.
 They are defined by the [director](./director-configuration.md): the repositories and unit of work are its type arguments, and the secret is its `SecretKey` property.
 
-1. **Repository Initialization**
+1.  **Repository Initialization**
 
-   <Tabs>
-     <TabItem label="Memory Repositories">
-       Use `MemoryRelationRepository`, `MemoryPersistedRoleRepository`, and `DummyUnitOfWork` as type arguments of the director.
+    <Tabs>
+  <TabItem label="Memory Repositories">
+    Use `MemoryRelationRepository`, `MemoryPersistedRoleRepository`, and `DummyUnitOfWork` as type arguments of the director.
 
-       ```csharp
-       public class Director(IFileSystem fileSystem, IConfigurationManager configurationManager, ContainerBuilder builder)
-           : AutofacContainerDirector<
-               MemoryRelationRepository,
-               MemoryPersistedRoleRepository,
-               DummyUnitOfWork,
-               BasicUserContext,
-               CacheFactory>(fileSystem, configurationManager, builder)
-       ```
-     </TabItem>
-     <TabItem label="RavenDB Repositories">
-       Use `RavenRelationRepository`, `RavenPersistedRoleRepository`, and `RavenUnitOfWork` (namespace `Backlot.Services.RavenDb`) to integrate RavenDB.
+        ```csharp
+        public class Director(IFileSystem fileSystem, IConfigurationManager configurationManager, ContainerBuilder builder)
+            : AutofacContainerDirector<
+                MemoryRelationRepository,
+                MemoryPersistedRoleRepository,
+                DummyUnitOfWork,
+                BasicUserContext,
+                CacheFactory>(fileSystem, configurationManager, builder)
+        ```
 
-       ```csharp
-       public class Director(IFileSystem fileSystem, IConfigurationManager configurationManager, ContainerBuilder builder)
-           : AutofacContainerDirector<
-               RavenRelationRepository,
-               RavenPersistedRoleRepository,
-               RavenUnitOfWork,
-               BasicUserContext,
-               CacheFactory>(fileSystem, configurationManager, builder)
-       ```
-     </TabItem>
-   </Tabs>
+      </TabItem>
+  <TabItem label="RavenDB Repositories">
+    Use `RavenRelationRepository`, `RavenPersistedRoleRepository`, and `RavenUnitOfWork` (namespace `Backlot.Services.RavenDb`) to integrate RavenDB.
 
-2. **File System Initialization**
+        ```csharp
+        public class Director(IFileSystem fileSystem, IConfigurationManager configurationManager, ContainerBuilder builder)
+            : AutofacContainerDirector<
+                RavenRelationRepository,
+                RavenPersistedRoleRepository,
+                RavenUnitOfWork,
+                BasicUserContext,
+                CacheFactory>(fileSystem, configurationManager, builder)
+        ```
 
-   <Tabs>
-     <TabItem label="LocalDiskStorage">
-       The file system initialized using `LocalDiskStorage`.
+      </TabItem>
+</Tabs>
 
-       ```csharp
-       var fs = new LocalDiskStorage();
-       ```
-     </TabItem>
-     <TabItem label="BlobStorage">
-       The file system initialized using `BlobStorage` (namespace `Backlot.Services.Filesystem.BlobStorage`) can be initialized with a connection string from the configuration.
-       The key name is up to you; `Backlot.BlobConnectionString` is used here.
+2.  **File System Initialization**
 
-       ```csharp
-       var fs = new BlobStorage(configuration["Backlot.BlobConnectionString"]);
-       ```
-     </TabItem>
-   </Tabs>
+    <Tabs>
+  <TabItem label="LocalDiskStorage">
+    The file system initialized using `LocalDiskStorage`.
 
-3. **Configuration Manager Initialization**
+        ```csharp
+        var fs = new LocalDiskStorage();
+        ```
 
-   The configuration manager is initialized with a `JsonSettingsManager` and a `DuplexConfigurationSettingsManager`, managing settings from both JSON files and the application configuration.
+      </TabItem>
+  <TabItem label="BlobStorage">
+    The file system initialized using `BlobStorage` (namespace `Backlot.Services.Filesystem.BlobStorage`) can be initialized with a connection string from the configuration.
+    The key name is up to you; `Backlot.BlobConnectionString` is used here.
+
+        ```csharp
+        var fs = new BlobStorage(configuration["Backlot.BlobConnectionString"]);
+        ```
+
+      </TabItem>
+</Tabs>
+
+3.  **Configuration Manager Initialization**
+
+    The configuration manager is initialized with a `JsonSettingsManager` and a `DuplexConfigurationSettingsManager`, managing settings from both JSON files and the application configuration.
 
     ```csharp
     var jsonSettingsManager = new JsonSettingsManager(configuration["Backlot.Environment"] ?? "local", fs);
     var duplexSettingsManager = new DuplexConfigurationSettingsManager(configuration, jsonSettingsManager);
     ```
 
-4. **Director Introduction**
+4.  **Director Introduction**
 
-   The director is created, combining the file system, configuration manager, and builder.
+    The director is created, combining the file system, configuration manager, and builder.
 
     ```csharp
     return new Director(fs, duplexSettingsManager, builder);
