@@ -34,7 +34,7 @@ If the role is persistable, it gets updated after the scenario is executed.
 ### Requirements POST
 
 - **Required Body**: The request must have a body.
-- **Required Body Data**: The request body must contain all the necessary role data.  
+- **Required Body Data**: The request body must contain all the necessary role data.
 - **No Query String Allowed**: There must be no query string in the URL.
 
 ## GET
@@ -60,11 +60,10 @@ However, depending on the logic of the scenario being executed, the state of the
 - **No Body Allowed**: The GET request should not contain a body.
 - **Required Query String**: The `uid` parameter is required in the query string.
 
-
 ## Conclusion
 
 The POST and GET endpoint methods serve different purposes:
 
 - **POST**: Used for processing and updating roles while executing scenarios with new or updated data.
 - **GET**: Used for executing scenarios using existing, persisted roles.
-While GET requests typically do not alter or persist data, the scenarios they execute may lead to updates in the data.
+  While GET requests typically do not alter or persist data, the scenarios they execute may lead to updates in the data.
