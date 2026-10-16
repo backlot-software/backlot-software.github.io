@@ -1,13 +1,20 @@
 {
-  "name": "",
-  "type": "module",
+  "name": "backlot-docs",
   "version": "0.0.1",
+  "private": true,
+  "license": "CC-BY-4.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/backlot-software/backlot-software.github.io.git"
+  },
+  "type": "module",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "format": "oxfmt"
   },
   "dependencies": {
     "@astrojs/starlight": "^0.42.4",
@@ -18,6 +25,37 @@
     "mermaid": "^11.17.2",
     "sharp": "^0.35.3",
     "tailwindcss": "^4.2.4"
+  },
+  "devDependencies": {
+    "@astrojs/compiler-rs": "^0.5.2",
+    "oxfmt": "^0.73.0"
+  },
+  "devEngines": {
+    "packageManager": [
+      {
+        "name": "npm",
+        "version": "^11",
+        "onFail": "download"
+      }
+    ],
+    "runtime": {
+      "name": "node",
+      "version": "^24",
+      "onFail": "download"
+    }
+  },
+  "engines": {
+    "bun": "forbidden, use npm instead",
+    "deno": "forbidden, use npm instead",
+    "node": "^24",
+    "npm": "^11",
+    "pnpm": "forbidden, use npm instead",
+    "runtime": {
+      "name": "node",
+      "version": "^24",
+      "onFail": "download"
+    },
+    "yarn": "forbidden, use npm instead"
   },
   "allowScripts": {
     "esbuild": true
