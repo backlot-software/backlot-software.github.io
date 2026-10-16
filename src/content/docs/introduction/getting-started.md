@@ -6,7 +6,7 @@ title: Getting Started
 
 When a Backlot server is ordered a default Backlot solution is created which you can clone from the given git repository. Containing the latest package versions of Backlot. Clone this git repository and add your own code. The basic folder structure for applications is:
 
-```
+```text
 ├── Yourname.Backlot.Server
 │   ├── Director.cs
 │   ├── Runner.cs
