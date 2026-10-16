@@ -47,9 +47,10 @@ They are defined by the [director](./director-configuration.md): the repositorie
 
 1.  **Repository Initialization**
 
-    <Tabs>
-  <TabItem label="Memory Repositories">
-    Use `MemoryRelationRepository`, `MemoryPersistedRoleRepository`, and `DummyUnitOfWork` as type arguments of the director.
+<Tabs>
+
+    <TabItem label="Memory Repositories">
+        Use `MemoryRelationRepository`, `MemoryPersistedRoleRepository`, and `DummyUnitOfWork` as type arguments of the director.
 
         ```csharp
         public class Director(IFileSystem fileSystem, IConfigurationManager configurationManager, ContainerBuilder builder)
@@ -61,9 +62,10 @@ They are defined by the [director](./director-configuration.md): the repositorie
                 CacheFactory>(fileSystem, configurationManager, builder)
         ```
 
-      </TabItem>
-  <TabItem label="RavenDB Repositories">
-    Use `RavenRelationRepository`, `RavenPersistedRoleRepository`, and `RavenUnitOfWork` (namespace `Backlot.Services.RavenDb`) to integrate RavenDB.
+    </TabItem>
+
+    <TabItem label="RavenDB Repositories">
+        Use `RavenRelationRepository`, `RavenPersistedRoleRepository`, and `RavenUnitOfWork` (namespace `Backlot.Services.RavenDb`) to integrate RavenDB.
 
         ```csharp
         public class Director(IFileSystem fileSystem, IConfigurationManager configurationManager, ContainerBuilder builder)
@@ -75,29 +77,33 @@ They are defined by the [director](./director-configuration.md): the repositorie
                 CacheFactory>(fileSystem, configurationManager, builder)
         ```
 
-      </TabItem>
+    </TabItem>
+
 </Tabs>
 
 2.  **File System Initialization**
 
-    <Tabs>
-  <TabItem label="LocalDiskStorage">
-    The file system initialized using `LocalDiskStorage`.
+<Tabs>
+
+    <TabItem label="LocalDiskStorage">
+        The file system initialized using `LocalDiskStorage`.
 
         ```csharp
         var fs = new LocalDiskStorage();
         ```
 
-      </TabItem>
-  <TabItem label="BlobStorage">
-    The file system initialized using `BlobStorage` (namespace `Backlot.Services.Filesystem.BlobStorage`) can be initialized with a connection string from the configuration.
-    The key name is up to you; `Backlot.BlobConnectionString` is used here.
+    </TabItem>
+
+    <TabItem label="BlobStorage">
+        The file system initialized using `BlobStorage` (namespace `Backlot.Services.Filesystem.BlobStorage`) can be initialized with a connection string from the configuration.
+        The key name is up to you; `Backlot.BlobConnectionString` is used here.
 
         ```csharp
         var fs = new BlobStorage(configuration["Backlot.BlobConnectionString"]);
         ```
 
-      </TabItem>
+    </TabItem>
+
 </Tabs>
 
 3.  **Configuration Manager Initialization**
