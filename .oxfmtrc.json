@@ -1,0 +1,32 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "useTabs": false,
+  "tabWidth": 2,
+  "singleQuote": true,
+  "trailingComma": "none",
+  "bracketSameLine": true,
+  "sortPackageJson": true,
+  "printWidth": 120,
+  "insertFinalNewline": true,
+  "sortImports": {
+    "newlinesBetween": false
+  },
+  "jsdoc": true,
+  "sortTailwindcss": {
+    "stylesheet": "src/styles/global.css",
+    "attributes": ["class"],
+    "preserveWhitespace": false
+  },
+  "astro": {
+    "allowShorthand": true
+  },
+  "ignorePatterns": [
+    "package-lock.json",
+    "/node_modules/",
+    "/dist/",
+    "/.astro/",
+    "/public/",
+    "/src/assets/",
+    "LICENCE.md"
+  ]
+}

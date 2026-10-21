@@ -8,6 +8,7 @@ This page contains a global explanation of SemVer and how to use it with Backlot
 To learn more about SemVer read [the documentation](https://semver.org/).
 
 ## SemVer
+
 SemVer is a versioning system where every part of the version changes the meaning of the version.
 The standard version is a three part version, for example: 1.0.3.
 This version conveys that this is the first major version with three bug fixes.
@@ -18,11 +19,12 @@ It is possible that you can change somethings to your code to make something fas
 When the 3 changes to a 4 there is a new bug fixed. There is nothing that changes the code for the user of the dependency. It is also possible to add alpha, beta and rc after the version numbers. An example to show how versions compare to each other: 1.1.0 > 1.0.2 > 1.0.1 > 1.0.1-rc > 1.0.1-beta > 1.0.1-alpha > 1.0.1-alpha.1.
 
 ## How to use
-Backlot uses the following versioning conventions: When a feature is build the feature will receive an alpha suffix with a build number. When a feature is merged to development the version suffix should be beta. When a feature is merged to main the suffix must be  rc or completely removed. This can be pushed to a feed. When the main and develop have no differences the main and develop version must be the same. 
+
+Backlot uses the following versioning conventions: When a feature is build the feature will receive an alpha suffix with a build number. When a feature is merged to development the version suffix should be beta. When a feature is merged to main the suffix must be rc or completely removed. This can be pushed to a feed. When the main and develop have no differences the main and develop version must be the same.
 
 ### Managing versions
 
-When a new feature branch is made go to the project file and change the version prefix based on the rules above. 
+When a new feature branch is made go to the project file and change the version prefix based on the rules above.
 There are three configurations: Release, Development and Debug. the configurations will change the suffix of the version. Debug: -alpha+(meta data based on Datetime), Development: -beta, Release: no suffix. Change the configuration for your project according to the branch you are on: main: release, development: Development and feature: Debug.
 
 When a new project is made the project file should have propertyGroups that should look like the example below.
@@ -50,9 +52,10 @@ When a new project is made the project file should have propertyGroups that shou
 </PropertyGroup>
 ```
 
-*** When using the Backlot build script versions are automatically managed in all .csproj files ***
+_**When using the Backlot build script versions are automatically managed in all .csproj files**_
 
 ## Examples
+
 Some of the scenario's that can occur with versioning and working on different branches:
 
 ![one feature](/images/one-feature.png)

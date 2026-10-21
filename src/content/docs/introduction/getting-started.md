@@ -6,7 +6,7 @@ title: Getting Started
 
 When a Backlot server is ordered a default Backlot solution is created which you can clone from the given git repository. Containing the latest package versions of Backlot. Clone this git repository and add your own code. The basic folder structure for applications is:
 
-```
+```text
 ├── Yourname.Backlot.Server
 │   ├── Director.cs
 │   ├── Runner.cs
@@ -49,19 +49,19 @@ When using the Backlot source instead of the packages, Backlot requires a certai
 
 ### How to use the Installer Script
 
- 1. Choose your root folder. An empty folder is recommended since the installer might loop trough all .csproj files in this folder and its descendants.
+1.  Choose your root folder. An empty folder is recommended since the installer might loop trough all .csproj files in this folder and its descendants.
 
- 2. [Download](https://3.basecamp.com/3094795/buckets/24365546/vaults/6033645375) the installer and InstallerSettings files and put these files in your root folder.
+2.  [Download](https://3.basecamp.com/3094795/buckets/24365546/vaults/6033645375) the installer and InstallerSettings files and put these files in your root folder.
 
- 3. Configure the InstallerSettings.
+3.  Configure the InstallerSettings.
 
- 4. Run the installer. Tip: opening with Git for Windows runs the script.
+4.  Run the installer. Tip: opening with Git for Windows runs the script.
 
- 5. Enable multi-repo support in your IDE.
+5.  Enable multi-repo support in your IDE.
 
 ### Running into problems?
 
-***Repos are not cloned***
+_**Repos are not cloned**_
 The first time the script runs sometimes the user isn't authorized to clone some of the repos. Running the script a second time seems to fix it.
 
 ## Server Setup
