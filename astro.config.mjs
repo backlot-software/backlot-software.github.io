@@ -14,6 +14,10 @@ export default defineConfig({
     }),
     starlight({
       title: 'Backlot Docs',
+      components: {
+        Header: './src/components/Navbar.astro',
+        Hero: './src/components/HomeHero.astro'
+      },
       social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/backlot-software' }],
       sidebar: [
         {

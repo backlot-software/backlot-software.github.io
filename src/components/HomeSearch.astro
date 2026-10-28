@@ -1,0 +1,32 @@
+---
+import ArrowRightIcon from '@lucide/astro/icons/arrow-right';
+import SearchIcon from '@lucide/astro/icons/search';
+---
+
+<form
+  class="flex w-full items-center gap-2.5 rounded-lg border-2 border-border bg-card px-3.5 py-3.5 text-muted transition-all focus-within:border-brand interact:border-brand"
+  role="search"
+  data-home-search>
+  <SearchIcon
+    class="size-5 flex-none stroke-current stroke-2 [stroke-linecap:round] [stroke-linejoin:round]"
+    aria-hidden="true"
+  />
+  <input
+    class="min-w-0 flex-1 appearance-none border-0 bg-transparent p-0 text-fg outline-none [font:inherit] placeholder:text-muted"
+    type="search"
+    name="query"
+    aria-label="Search Backlot documentation"
+    placeholder="Ask Backlot anything..."
+    required
+  />
+
+  <button
+    class="flex size-8 flex-none cursor-pointer items-center justify-center rounded-sm border-0 bg-transparent p-0 text-fg interact:text-brand"
+    type="submit"
+    aria-label="Search">
+    <ArrowRightIcon
+      class="size-5 flex-none stroke-current stroke-2 [stroke-linecap:round] [stroke-linejoin:round]"
+      aria-hidden="true"
+    />
+  </button>
+</form>
