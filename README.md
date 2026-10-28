@@ -65,6 +65,19 @@ We welcome contributions to improve the Backlot documentation! To contribute, pl
 - Files are written in [Markdown](https://www.markdownguide.org/).
   - Files may use MDX for when components are needed within the documentation, such as tabs. We heavily discourage using MDX and prefer sticking to standard Markdown whenever possible.
 
+### Shared Navigation and Homepage
+
+`src/components/Navbar.astro` is the shared Starlight header for every page, registered in `astro.config.mjs`.
+Update its links to change the site navigation. The homepage hero is rendered by `HomeHero.astro`, with its title and tagline configured in `src/content/docs/index.mdx`.
+`HomeSearch.astro` submits the typed query to Starlight's built-in search. Search results require a production build; the development server shows Starlight's search notice.
+
+Run the homepage regression checks after building:
+
+```bash
+npm run build
+node --test tests/homepage.test.mjs
+```
+
 ## License
 
 This documentation and it's contributions are licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).

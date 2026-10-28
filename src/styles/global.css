@@ -1,8 +1,18 @@
 @layer base, starlight, theme, components, utilities;
-
 @import '@astrojs/starlight-tailwind';
 @import 'tailwindcss/theme.css' layer(theme);
 @import 'tailwindcss/utilities.css' layer(utilities);
+@import '@fontsource-variable/manrope';
+@import '@fontsource-variable/sora';
+@import '@fontsource-variable/jetbrains-mono';
+
+@custom-variant interact (&:is(:hover, :focus-visible));
+
+:root {
+  --sl-nav-height: 3.5rem;
+  --sl-color-bg: var(--color-bg);
+  --sl-color-text: var(--color-fg);
+}
 
 @theme {
   /*
@@ -10,22 +20,45 @@
 	https://starlight.astro.build/guides/css-and-tailwind/#styling-starlight-with-tailwind
 	*/
   /* Generated accent color palettes. */
-  --color-accent-200: #f7b1cb;
+  --color-accent-200: #f90093;
   --color-accent-600: #c10071;
   --color-accent-900: #5f0035;
   --color-accent-950: #420b26;
   /* Generated gray color palettes. */
-  --color-gray-100: #f6f6f6;
+  --color-gray-100: #ebebeb;
   --color-gray-200: #eeeeee;
   --color-gray-300: #c2c2c2;
-  --color-gray-400: #8b8b8b;
+  --color-gray-400: #808080;
   --color-gray-500: #585858;
-  --color-gray-700: #383838;
-  --color-gray-800: #272727;
-  --color-gray-900: #181818;
+  --color-gray-700: #2e2e2e;
+  --color-gray-800: #1c1c1c;
+  --color-gray-900: #121212;
+
+  /* Colors */
+  --color-bg: var(--color-gray-900);
+  --color-card: var(--color-gray-800);
+  --color-border: var(--color-gray-700);
+  --color-fg: var(--color-gray-100);
+  --color-muted: var(--color-gray-400);
+  --color-brand: var(--color-accent-200);
+  --color-brand-soft: rgba(249, 0, 147, 0.1);
+  --color-brand-ring: rgba(249, 0, 147, 0.25);
+
+  /* Font Family */
+  --font-sans: 'Manrope Variable', system-ui, sans-serif;
+  --font-display: 'Sora Variable', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
 }
 
-/*
-Add additional Tailwind styles to this file:
-https://tailwindcss.com/docs/adding-custom-styles#using-custom-css
-*/
+@layer base {
+  .header {
+    @apply border-b border-border! bg-[#0f0f0f]/70! p-0! backdrop-blur-md;
+  }
+
+  input[type='search']::-webkit-search-cancel-button,
+  input[type='search']::-webkit-search-decoration,
+  input[type='search']::-webkit-search-results-button,
+  input[type='search']::-webkit-search-results-decoration {
+    display: none;
+  }
+}
