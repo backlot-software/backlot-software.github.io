@@ -16,7 +16,8 @@ export default defineConfig({
       title: 'Backlot Docs',
       components: {
         Header: './src/components/Navbar.astro',
-        Hero: './src/components/HomeHero.astro'
+        Hero: './src/components/HomeHero.astro',
+        Sidebar: './src/components/Sidebar.astro'
       },
       social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/backlot-software' }],
       sidebar: [
