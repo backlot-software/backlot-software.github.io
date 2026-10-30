@@ -18,15 +18,15 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@astrojs/starlight": "^0.42.6",
+    "@astrojs/starlight": "^0.42.8",
     "@astrojs/starlight-tailwind": "^5.0.0",
     "@fontsource-variable/jetbrains-mono": "^5.3.0",
     "@fontsource-variable/manrope": "^5.3.0",
     "@fontsource-variable/sora": "^5.3.0",
     "@tailwindcss/vite": "^4.3.3",
-    "astro": "^7.4.0",
-    "astro-mermaid": "^2.1.0",
-    "mermaid": "^11.17.2",
+    "astro": "^7.4.4",
+    "astro-mermaid": "^2.2.0",
+    "mermaid": "^12.2.0",
     "sharp": "^0.35.5",
     "tailwindcss": "^4.3.3"
   },
@@ -34,12 +34,12 @@
     "@astrojs/compiler-rs": "^0.5.2",
     "@eslint/js": "^10.0.1",
     "@eslint/markdown": "^8.0.3",
-    "@lucide/astro": "^1.63.0",
-    "eslint": "^10.12.0",
+    "@lucide/astro": "^1.65.0",
+    "eslint": "^10.13.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-astro": "^3.2.1",
-    "oxfmt": "^0.73.0",
-    "typescript-eslint": "^8.71.2"
+    "oxfmt": "^0.75.0",
+    "typescript-eslint": "^8.72.1"
   },
   "devEngines": {
     "packageManager": [
@@ -51,19 +51,19 @@
     ],
     "runtime": {
       "name": "node",
-      "version": "^24",
+      "version": "^26",
       "onFail": "download"
     }
   },
   "engines": {
     "bun": "forbidden, use npm instead",
     "deno": "forbidden, use npm instead",
-    "node": "^24",
+    "node": "^26",
     "npm": "^11",
     "pnpm": "forbidden, use npm instead",
     "runtime": {
       "name": "node",
-      "version": "^24",
+      "version": "^26",
       "onFail": "download"
     },
     "yarn": "forbidden, use npm instead"
