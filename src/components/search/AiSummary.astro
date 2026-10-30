@@ -1,0 +1,29 @@
+---
+import SparklesIcon from '@lucide/astro/icons/sparkles';
+
+interface Props {
+  loading?: boolean;
+}
+
+const { loading = false } = Astro.props;
+---
+
+<section class="rounded-md border border-border bg-card px-5 py-5 sm:px-6" aria-labelledby="ai-summary-title">
+  <h2 id="ai-summary-title" class="m-0 flex items-center gap-2 text-base font-semibold text-fg">
+    <SparklesIcon class="size-4 flex-none text-brand" aria-hidden="true" />
+    AI-Generated Answer Summary
+  </h2>
+
+  {loading ? (
+    <div class="mt-4 flex flex-col gap-2" aria-hidden="true">
+      <div class="h-3 w-3/4 max-w-100 animate-pulse rounded-full bg-muted"></div>
+      <div class="h-3 w-1/2 max-w-80 animate-pulse rounded-full bg-muted"></div>
+    </div>
+  ) : (
+    <>
+      <div class="mt-4 text-sm leading-relaxed text-fg sm:text-base [&_code]:rounded-sm [&_code]:bg-border [&_code]:px-1 [&_code]:py-0.5 [&_code]:font-mono [&_code]:text-[0.85em]">
+        <slot />
+      </div>
+    </>
+  )}
+</section>

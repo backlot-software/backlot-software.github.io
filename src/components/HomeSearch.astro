@@ -1,10 +1,24 @@
 ---
 import ArrowRightIcon from '@lucide/astro/icons/arrow-right';
 import SearchIcon from '@lucide/astro/icons/search';
+
+interface Props {
+  /** Smaller variant with a keyboard shortcut hint, used on the search results page. */
+  compact?: boolean;
+  class?: string;
+}
+
+const { compact = false, class: className } = Astro.props;
 ---
 
 <form
-  class="flex w-full items-center gap-2.5 rounded-lg border-2 border-border bg-card px-3.5 py-3.5 text-muted transition-all focus-within:border-brand interact:border-brand"
+  action="/search/"
+  method="get"
+  class:list={[
+    'flex w-full items-center gap-2.5 rounded-lg border border-border bg-card px-3.5 text-muted transition-all focus-within:border-brand interact:border-brand',
+    compact ? 'py-1' : 'py-3.5',
+    className
+  ]}
   role="search"
   data-home-search>
   <SearchIcon
@@ -19,6 +33,12 @@ import SearchIcon from '@lucide/astro/icons/search';
     placeholder="Ask Backlot anything..."
     required
   />
+
+  {compact && (
+    <kbd class="hidden flex-none font-sans text-xs text-muted sm:block" aria-label="Command K">
+      &#8984; K
+    </kbd>
+  )}
 
   <button
     class="flex size-8 flex-none cursor-pointer items-center justify-center rounded-sm border-0 bg-transparent p-0 text-fg interact:text-brand"
