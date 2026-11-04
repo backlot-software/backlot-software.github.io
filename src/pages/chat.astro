@@ -1,0 +1,116 @@
+---
+import { Badge, Code } from '@astrojs/starlight/components';
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import ArrowRightIcon from '@lucide/astro/icons/arrow-right';
+import BotIcon from '@lucide/astro/icons/bot';
+import FileIcon from '@lucide/astro/icons/file';
+import SearchIcon from '@lucide/astro/icons/search';
+
+// Placeholder conversation until the chat is connected to NousAI.
+const question = 'How can I log a message every time one of my scenarios has finished?';
+
+const code = `public class CalculateWatcher : ISceneWatcher<Calculate>
+{
+    public void Watch(Calculate scenario)
+    {
+        scenario.After += (sender, args) => Console.WriteLine("Calculate ended");
+    }
+}`;
+
+const sources = [
+  { label: 'Watching', href: '/concepts/watching/' },
+  { label: 'Events', href: '/concepts/events/' }
+];
+---
+
+<StarlightPage
+  frontmatter={{
+    title: 'AI Chat',
+    description: 'Ask the Backlot Docs Assistant anything about Backlot.',
+    tableOfContents: false,
+    pagefind: false,
+    prev: false,
+    next: false
+  }}>
+  <div class="flex flex-col gap-10 pb-32 md:pt-4">
+    <div class="flex justify-end sm:gap-4">
+      <p class="m-0 max-w-xl rounded-md bg-card px-4 py-3 text-sm leading-relaxed text-fg">{question}</p>
+    </div>
+
+    <article class="contents" aria-labelledby="assistant-message-title">
+      <div class="flex max-w-2xl min-w-0 flex-1 flex-col gap-2">
+        <p class="m-0 text-sm leading-relaxed text-fg sm:text-base">
+          Create a SceneWatcher for the scenario and subscribe to its <code>After</code> event, which every scenario
+          fires once it has finished. Register the watcher in the <code>Director</code> and it will be called for every
+          run of that scenario.
+        </p>
+        <Code {code} lang="csharp" />
+        <div class="flex flex-col gap-2">
+          <h3 class="m-0 text-xs font-semibold text-fg">Sources:</h3>
+          <div class="m-0 flex list-none items-center-safe gap-2 p-0">
+            {sources.map(({ label, href }) => (
+              <a
+                {href}
+                class="flex items-center gap-1.5 rounded-md border border-border px-2.5 py-1 text-xs text-fg no-underline transition-all visited:text-fg interact:border-brand">
+                <FileIcon class="size-3.5 flex-none" aria-hidden="true" />
+                {label}
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <div class="not-content chat-composer fixed inset-e-0 bottom-0 z-10 border-t border-border bg-bg py-4 md:py-6">
+    <form class="mx-auto max-w-3xl" aria-label="Ask the Backlot Docs Assistant">
+      <div class="flex flex-1 items-center gap-2.5 rounded-lg border border-border bg-card px-3.5 py-1 text-muted transition-all focus-within:border-brand interact:border-brand">
+        <SearchIcon class="size-5 flex-none" aria-hidden="true" />
+        <input
+          class="min-w-0 flex-1 appearance-none border-0 bg-transparent p-0 text-fg outline-none placeholder:text-muted"
+          type="text"
+          name="message"
+          aria-label="Message"
+          placeholder="Ask Backlot anything..."
+          autocomplete="off"
+          required
+        />
+        <button
+          class="flex size-8 flex-none cursor-pointer items-center justify-center rounded-sm border-0 bg-transparent p-0 text-fg sm:hidden interact:text-brand"
+          type="submit"
+          aria-label="Send">
+          <ArrowRightIcon class="size-5 flex-none" aria-hidden="true" />
+        </button>
+      </div>
+    </form>
+  </div>
+</StarlightPage>
+
+<style is:global>
+  :root {
+    --sl-content-width: 100%;
+  }
+
+  .sidebar-pane {
+    background-color: var(--color-bg);
+  }
+
+  .chat-composer {
+    inset-inline-start: var(--sl-content-inline-start, 0);
+    padding-inline: var(--sl-content-pad-x);
+  }
+
+  main > .content-panel:has(#_top) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  main > .content-panel:has(#_top) + .content-panel {
+    border-top: 0;
+  }
+</style>
