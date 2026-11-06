@@ -1,17 +1,18 @@
 ---
 import Search from '@astrojs/starlight/components/Search.astro';
 import Sidebar from '@astrojs/starlight/components/Sidebar.astro';
+import ChatSidebar from './chat/ChatSidebar.astro';
 import SearchFilters from './search/SearchFilters.astro';
 
-const isSearchPage = Astro.locals.starlightRoute.id === 'search';
+const { id } = Astro.locals.starlightRoute;
 ---
 
-{isSearchPage ? (
+{id === 'search' || id === 'chat' ? (
   <>
-    <SearchFilters />
+    {id === 'search' ? <SearchFilters /> : <ChatSidebar />}
     <style is:inline>
-      .sidebar-content {
-        border-right: 1px solid var(--color-border);
+      .sidebar-pane {
+        border-inline-end-color: var(--color-border);
       }
     </style>
   </>
