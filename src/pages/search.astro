@@ -1,0 +1,107 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import SlidersHorizontalIcon from '@lucide/astro/icons/sliders-horizontal';
+import HomeSearch from '../components/HomeSearch.astro';
+import AiSummary from '../components/search/AiSummary.astro';
+import SearchResultCard from '../components/search/SearchResultCard.astro';
+
+// Placeholder content until the search is connected to NousAI.
+const totalResults = 12;
+const results = [
+  {
+    title: 'Watching',
+    href: '/concepts/watching/',
+    breadcrumbs: ['Docs', 'Concepts', 'Watching'],
+    excerpt:
+      'Configure watchers in the Director to act on events fired in a scenario. Use a SceneWatcher for a specific scenario or a BingeWatcher for every scenario.'
+  },
+  {
+    title: 'Events',
+    href: '/concepts/events/',
+    breadcrumbs: ['Docs', 'Concepts', 'Events'],
+    excerpt:
+      'Scenarios fire the built-in Before, Playing, Ending and After events, and can fire custom events such as Authenticated with Fire() or FireAsync().'
+  },
+  {
+    title: 'Director configuration',
+    href: '/introduction/director-configuration/',
+    breadcrumbs: ['Docs', 'Introduction', 'Director configuration'],
+    excerpt:
+      'The Incept method of the Director is the place where instructors, scenario compositions and watchers are configured.'
+  }
+];
+---
+
+<StarlightPage
+  frontmatter={{
+    title: 'Search results',
+    description: 'Search the Backlot documentation and get AI-generated answers.',
+    tableOfContents: false,
+    pagefind: false,
+    prev: false,
+    next: false
+  }}>
+  <div class="not-content flex flex-col gap-8 pb-8 md:pt-6">
+    <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+      <HomeSearch compact class="flex-1" />
+      <button
+        type="button"
+        popovertarget="starlight__sidebar"
+        class="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-md border border-border bg-card px-4 py-2.5 text-sm font-semibold text-fg transition-all md:hidden interact:border-brand">
+        <SlidersHorizontalIcon class="size-4" aria-hidden="true" />
+        Filters
+      </button>
+    </div>
+
+    <AiSummary>
+      <p class="m-0">
+        Every scenario fires the built-in <code>Before</code>, <code>Playing</code>, <code>Ending</code> and
+        <code>After</code> events, and you can fire your own with <code>Fire()</code> or <code>FireAsync()</code>. To
+        react to them, implement an <code>ISceneWatcher&lt;TScenario&gt;</code> for a single scenario, or an
+        <code>IBingeWatcher</code> for every scenario, and register it in the <code>Incept</code> method of your
+        Director.
+      </p>
+    </AiSummary>
+
+    <section class="flex flex-col gap-4" aria-labelledby="search-results-title">
+      <h2 id="search-results-title" class="m-0 text-base font-semibold text-fg">
+        All Search Results ({totalResults} found)
+      </h2>
+      <ol class="m-0 flex list-none flex-col gap-4 p-0">
+        {results.map((result) => (
+          <SearchResultCard {...result} />
+        ))}
+      </ol>
+    </section>
+  </div>
+</StarlightPage>
+
+<script>
+  const query = new URLSearchParams(window.location.search).get('query');
+  const input = document.querySelector<HTMLInputElement>('[data-home-search] input[name="query"]');
+  if (query && input) input.value = query;
+</script>
+
+<style is:global>
+  :root {
+    --sl-content-width: 67.5rem;
+  }
+
+  .sidebar-pane {
+    background-color: var(--color-bg);
+  }
+
+  main > .content-panel:has(#_top) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  main > .content-panel:has(#_top) + .content-panel {
+    border-top: 0;
+  }
+</style>
