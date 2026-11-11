@@ -1,0 +1,65 @@
+---
+import Default from '@astrojs/starlight/components/PageTitle.astro';
+import CheckIcon from '@lucide/astro/icons/check';
+import CopyIcon from '@lucide/astro/icons/copy';
+import { markdownUrl } from '../utils/markdown';
+
+const { entry } = Astro.locals.starlightRoute;
+// Custom pages such as /search have no Markdown source to copy.
+const hasMarkdown = !!entry.body;
+---
+
+<div class="mt-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-3 [&>h1]:mt-0">
+  <Default />
+  {hasMarkdown && (
+    <button
+      type="button"
+      class="group flex flex-none cursor-pointer items-center gap-2 rounded-md border border-border bg-card px-3 py-1.5 text-sm font-semibold text-fg transition-all interact:border-brand"
+      data-copy-markdown={markdownUrl(entry.id)}
+      data-pagefind-ignore>
+      <CopyIcon class="size-4 group-data-[state=copied]:hidden" aria-hidden="true" />
+      <CheckIcon class="hidden size-4 text-brand group-data-[state=copied]:block" aria-hidden="true" />
+      <span data-copy-label aria-live="polite">
+        Copy page
+      </span>
+    </button>
+  )}
+</div>
+
+<script>
+  const labels = { idle: 'Copy page', copied: 'Copied', failed: 'Copy failed' };
+
+  const fetchMarkdown = async (url: string) => {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`Failed to load ${url}: ${response.status}`);
+    return new Blob([await response.text()], { type: 'text/plain' });
+  };
+
+  document.querySelectorAll<HTMLButtonElement>('[data-copy-markdown]').forEach((button) => {
+    const label = button.querySelector('[data-copy-label]')!;
+    let resetTimeout: ReturnType<typeof setTimeout> | undefined;
+
+    const setState = (state: keyof typeof labels) => {
+      button.dataset.state = state;
+      label.textContent = labels[state];
+      clearTimeout(resetTimeout);
+      if (state !== 'idle') resetTimeout = setTimeout(() => setState('idle'), 2000);
+    };
+
+    button.addEventListener('click', async () => {
+      const markdown = fetchMarkdown(button.dataset.copyMarkdown!);
+      try {
+        // Passing the pending fetch to ClipboardItem keeps the copy inside the click, which Safari requires.
+        if (typeof ClipboardItem !== 'undefined') {
+          await navigator.clipboard.write([new ClipboardItem({ 'text/plain': markdown })]);
+        } else {
+          await navigator.clipboard.writeText(await (await markdown).text());
+        }
+        setState('copied');
+      } catch (error) {
+        console.error(error);
+        setState('failed');
+      }
+    });
+  });
+</script>
