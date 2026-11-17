@@ -5,31 +5,7 @@ import HomeSearch from '../components/HomeSearch.astro';
 import AiSummary from '../components/search/AiSummary.astro';
 import SearchResultCard from '../components/search/SearchResultCard.astro';
 
-// Placeholder content until the search is connected to NousAI.
-const totalResults = 12;
-const results = [
-  {
-    title: 'Watching',
-    href: '/concepts/watching/',
-    breadcrumbs: ['Docs', 'Concepts', 'Watching'],
-    excerpt:
-      'Configure watchers in the Director to act on events fired in a scenario. Use a SceneWatcher for a specific scenario or a BingeWatcher for every scenario.'
-  },
-  {
-    title: 'Events',
-    href: '/concepts/events/',
-    breadcrumbs: ['Docs', 'Concepts', 'Events'],
-    excerpt:
-      'Scenarios fire the built-in Before, Playing, Ending and After events, and can fire custom events such as Authenticated with Fire() or FireAsync().'
-  },
-  {
-    title: 'Director configuration',
-    href: '/introduction/director-configuration/',
-    breadcrumbs: ['Docs', 'Introduction', 'Director configuration'],
-    excerpt:
-      'The Incept method of the Director is the place where instructors, scenario compositions and watchers are configured.'
-  }
-];
+const pagefindUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/pagefind/pagefind.js`;
 ---
 
 <StarlightPage
@@ -63,25 +39,153 @@ const results = [
       </p>
     </AiSummary>
 
-    <section class="flex flex-col gap-4" aria-labelledby="search-results-title">
+    <section
+      class="flex flex-col gap-4"
+      aria-labelledby="search-results-title"
+      data-search-results
+      data-pagefind-url={pagefindUrl}>
       <h2 id="search-results-title" class="m-0 text-base font-semibold text-fg">
-        All Search Results ({totalResults} found)
+        All Search Results (<span data-search-count>0</span> found)
       </h2>
-      <ol class="m-0 flex list-none flex-col gap-4 p-0">
-        {results.map((result) => (
-          <SearchResultCard {...result} />
-        ))}
-      </ol>
+      <p class="m-0 text-sm text-muted" data-search-status aria-live="polite">
+        {import.meta.env.DEV
+          ? 'Search is only available in production builds. Run `npm run build` and `npm run preview` to test it locally.'
+          : 'Enter a search term to find pages in the documentation.'}
+      </p>
+      <ol class="m-0 flex list-none flex-col gap-4 p-0" data-search-list></ol>
+      <template data-search-result-template>
+        <SearchResultCard title="" href="" breadcrumbs={[]} excerpt="" />
+      </template>
     </section>
   </div>
 </StarlightPage>
 
 <script>
-  const query = new URLSearchParams(window.location.search).get('query');
-  const input = document.querySelector<HTMLInputElement>('[data-home-search] input[name="query"]');
-  if (query && input) input.value = query;
-</script>
+  interface PagefindResultData {
+    url: string;
+    excerpt: string;
+    meta: { title?: string; section?: string };
+  }
 
+  interface PagefindSearch {
+    results: { data: () => Promise<PagefindResultData> }[];
+    totalFilters: Record<string, Record<string, number>>;
+  }
+
+  interface Pagefind {
+    filters: () => Promise<Record<string, Record<string, number>>>;
+    search: (term: string, options?: { filters?: Record<string, unknown> }) => Promise<PagefindSearch>;
+  }
+
+  const section = document.querySelector<HTMLElement>('[data-search-results]')!;
+  const list = section.querySelector<HTMLOListElement>('[data-search-list]')!;
+  const count = section.querySelector<HTMLElement>('[data-search-count]')!;
+  const status = section.querySelector<HTMLElement>('[data-search-status]')!;
+  const template = section.querySelector<HTMLTemplateElement>('[data-search-result-template]')!;
+  const filters = document.querySelector<HTMLFormElement>('[data-search-filters]');
+  const input = document.querySelector<HTMLInputElement>('[data-home-search] input[name="query"]');
+
+  const params = new URLSearchParams(window.location.search);
+  const query = params.get('query')?.trim() ?? '';
+  const selectedSections = new Set(params.getAll('section'));
+
+  if (input) input.value = query;
+
+  const renderResult = ({ url, excerpt, meta }: PagefindResultData) => {
+    const card = template.content.firstElementChild!.cloneNode(true) as HTMLLIElement;
+    const title = meta.title ?? url;
+    card.querySelector<HTMLAnchorElement>('[data-result-link]')!.href = url;
+    card.querySelector('[data-result-title]')!.textContent = title;
+    // Pagefind escapes the excerpt and only adds <mark> elements, so it is safe as HTML.
+    card.querySelector('[data-result-excerpt]')!.innerHTML = excerpt;
+
+    const breadcrumbs = card.querySelector('[data-result-breadcrumbs]')!;
+    // Top-level pages are their own section, so skip duplicate crumbs.
+    [...new Set(['Docs', meta.section, title].filter((crumb): crumb is string => !!crumb))].forEach((crumb, index) => {
+      if (index > 0) {
+        const separator = document.createElement('span');
+        separator.setAttribute('aria-hidden', 'true');
+        separator.textContent = '>';
+        breadcrumbs.append(separator);
+      }
+      const span = document.createElement('span');
+      span.textContent = crumb;
+      breadcrumbs.append(span);
+    });
+    return card;
+  };
+
+  const renderSectionFilters = (counts: Record<string, number> = {}) => {
+    const group = filters?.querySelector<HTMLFieldSetElement>('[data-filter-group="section"]');
+    const optionTemplate = group?.querySelector<HTMLTemplateElement>('[data-filter-option-template]');
+    if (!group || !optionTemplate) return;
+
+    const sections = Object.keys(counts)
+      .filter((name) => counts[name] > 0 || selectedSections.has(name))
+      .sort((a, b) => counts[b] - counts[a] || a.localeCompare(b));
+
+    group.querySelector('[data-filter-options]')!.replaceChildren(
+      ...sections.map((name) => {
+        const option = optionTemplate.content.firstElementChild!.cloneNode(true) as HTMLLabelElement;
+        const checkbox = option.querySelector('input')!;
+        checkbox.value = name;
+        checkbox.checked = selectedSections.has(name);
+        option.querySelector('[data-filter-label]')!.textContent = name;
+        option.querySelector('[data-filter-count]')!.textContent = String(counts[name]);
+        return option;
+      })
+    );
+    group.hidden = sections.length === 0;
+  };
+
+  let pagefind: Promise<Pagefind> | undefined;
+  let latestSearch = 0;
+
+  const runSearch = async () => {
+    if (import.meta.env.DEV || !query) return;
+    const searchId = ++latestSearch;
+    status.textContent = 'Searching…';
+    status.hidden = false;
+
+    try {
+      // Loading the filters first makes Pagefind include per-filter counts in search results.
+      pagefind ??= import(/* @vite-ignore */ section.dataset.pagefindUrl!).then(async (module: Pagefind) => {
+        await module.filters();
+        return module;
+      });
+      const sections = [...selectedSections];
+      const search = await (
+        await pagefind
+      ).search(query, sections.length ? { filters: { section: { any: sections } } } : undefined);
+      const results = await Promise.all(search.results.map((result) => result.data()));
+      if (searchId !== latestSearch) return;
+
+      renderSectionFilters(search.totalFilters.section);
+      count.textContent = String(results.length);
+      list.replaceChildren(...results.map(renderResult));
+      status.textContent = results.length ? '' : `No results found for “${query}”.`;
+      status.hidden = results.length > 0;
+    } catch (error) {
+      console.error(error);
+      if (searchId === latestSearch) status.textContent = 'Search failed to load. Please try again later.';
+    }
+  };
+
+  filters?.addEventListener('change', (event) => {
+    const checkbox = event.target as HTMLInputElement;
+    if (checkbox.name !== 'section') return;
+    if (checkbox.checked) selectedSections.add(checkbox.value);
+    else selectedSections.delete(checkbox.value);
+
+    const url = new URL(window.location.href);
+    url.searchParams.delete('section');
+    selectedSections.forEach((value) => url.searchParams.append('section', value));
+    history.replaceState(null, '', url);
+    void runSearch();
+  });
+
+  void runSearch();
+</script>
 <style is:global>
   :root {
     --sl-content-width: 67.5rem;

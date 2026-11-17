@@ -12,8 +12,9 @@ const { title, href, breadcrumbs, excerpt } = Astro.props;
 <li>
   <a
     {href}
-    class="group block rounded-md border border-border bg-card px-5 py-4 no-underline transition-all interact:border-brand">
-    <p class="m-0 flex flex-wrap items-center gap-1 text-xs text-muted">
+    class="group block rounded-md border border-border bg-card px-5 py-4 no-underline transition-all interact:border-brand"
+    data-result-link>
+    <p class="m-0 flex flex-wrap items-center gap-1 text-xs text-muted" data-result-breadcrumbs>
       {breadcrumbs.map((crumb, index) => (
         <>
           {index > 0 && <span aria-hidden="true">&gt;</span>}
@@ -21,7 +22,15 @@ const { title, href, breadcrumbs, excerpt } = Astro.props;
         </>
       ))}
     </p>
-    <h3 class="mt-1 mb-0 text-base font-semibold text-fg transition-all group-hover:text-brand sm:text-lg">{title}</h3>
-    <p class="mt-1 mb-0 text-sm text-muted">{excerpt}</p>
+    <h3
+      class="mt-1 mb-0 text-base font-semibold text-fg transition-all group-hover:text-brand sm:text-lg"
+      data-result-title>
+      {title}
+    </h3>
+    <p
+      class="mt-1 mb-0 text-sm text-muted [&_mark]:bg-transparent [&_mark]:font-semibold [&_mark]:text-fg"
+      data-result-excerpt>
+      {excerpt}
+    </p>
   </a>
 </li>
