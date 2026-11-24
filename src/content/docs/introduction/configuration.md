@@ -20,6 +20,7 @@ If we want our project to use the configuration file `local.jsonsettings.json`, 
     }
 
 ### Configurable Properties
+
 Properties marked with the attribute `[Configurable]` can be customized in the jsonsettings.
 Bellow is an example of a configurable property in a scenario `SayHi`.
 
@@ -34,7 +35,7 @@ Bellow is an example of a configurable property in a scenario `SayHi`.
         public SayHi(IPerson role) : base(role)
         {
         }
-    
+
         protected override string Exec()
         {
             return Greeting + Role.Name;

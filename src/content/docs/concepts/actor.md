@@ -29,7 +29,6 @@ Consider this metaphor to better understand the actor/role principle:
 - Other actors who also acquire the skills for the role of a fighter pilot can be instructed and perform the flight scene as well.
 - Meanwhile, Tom Cruise, the actor, retains his original attributes and can play different roles, such as a secret agent, in another movie.
 
-
 ## Example
 
 Here is a practical example to illustrate the concept:
@@ -56,9 +55,9 @@ The employee record (actor) is assigned a "Person" role. The role might be repre
 
 ```json
 {
-   "Uid": "12345", 
-   "Name": "Jane Doe", 
-   "BirthDate": "1985-05-15"
+  "Uid": "12345",
+  "Name": "Jane Doe",
+  "BirthDate": "1985-05-15"
 }
 ```
 
@@ -72,11 +71,11 @@ When the actor is stored or returned after executing the scenario, it will look 
 
 ```json
 {
-   "Uid": "12345", 
-   "Name": "Jane Doe", 
-   "BirthDate": "1985-05-15",
-   "position": "Software Engineer",
-   "department": "Development"
+  "Uid": "12345",
+  "Name": "Jane Doe",
+  "BirthDate": "1985-05-15",
+  "position": "Software Engineer",
+  "department": "Development"
 }
 ```
 

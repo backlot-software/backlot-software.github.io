@@ -6,7 +6,7 @@ This document defines the structure and conventions for tests in `Backlot.Testin
 
 The goal is to keep the test suite predictable, maintainable and useful as documentation.
 
-## Adding a new test
+### Adding a new test
 
 Before adding a test:
 
@@ -16,13 +16,13 @@ Before adding a test:
 4. Follow the applicable [Naming Conventions](#4-naming-conventions)
 5. Implement the test using [Arrange, Act, Assert](#5-arrange-act-assert) and follow the [Do's and Don'ts](#6-dos-and-donts).
 
-# 1\. Test organisation
+## 1\. Test organisation
 
 Tests are organised by the behaviour they are intended to verify, not by Backlot components that execute during the test.
 
 There are three main types of tests:
 
-## Method-focused tests
+### Method-focused tests
 
 A method-focused test verifies the contract or behaviour of one Backlot method.
 
@@ -52,7 +52,7 @@ public class Execute
 }
 ```
 
-## Use-case tests
+### Use-case tests
 
 Use-case tests describe a realistic workflow or behaviour from the perspective of a Backlot user/developer. They may deliberately combine multiple public Backlot behaviours, such as role presentation, scenarios, persistence, relations or serialization.
 
@@ -67,7 +67,7 @@ They are organised by capability or use case rather than by a single Backlot cla
 
 Examples of existing areas that fit this category include complex actor handling, optional role resolution (NullAllowed) and transformations.
 
-## Integration tests
+### Integration tests
 
 `Integration/` is reserved for tests that intentionally depend on real external infrastructure, for example:
 
@@ -76,7 +76,7 @@ Examples of existing areas that fit this category include complex actor handling
 - a real filesystem;
 - external services.
 
-# 2\. Proposed project structure
+## 2\. Proposed project structure
 
 ```text
 Backlot.Testing/
@@ -113,7 +113,7 @@ Namespaces follow the folder structure.
 
 Only place code in `Shared` when it is genuinely reused or represents reusable test infrastructure. Scenario-specific setup should remain close to the tests that use it.
 
-# 3\. Deciding where a test belongs
+## 3\. Deciding where a test belongs
 
 Use the following decision tree to determine where a test belongs based on its infrastructure dependencies and intended behaviour.
 
@@ -136,11 +136,11 @@ flowchart TD
 
 ```
 
-# 4\. Naming Conventions
+## 4\. Naming Conventions
 
-## 4.1\. Method-focused test conventions
+### 4.1\. Method-focused test conventions
 
-### File and fixture naming
+#### File and fixture naming
 
 The Backlot class is represented by a folder.
 
@@ -162,7 +162,7 @@ public class GetRoleName
 }
 ```
 
-### Test method naming
+#### Test method naming
 
 Use:
 
@@ -181,11 +181,11 @@ Presents_AnonymousActor_ReturnsJsonProxy()
 
 Names must describe the current behaviour of the system. Avoid vague names such as `Example`, `Debugging` or names that no longer match the assertion.
 
-## 4.2\. Use-case test conventions
+### 4.2\. Use-case test conventions
 
 A use-case fixture represents one clear developer/user goal.
 
-### User story
+#### User story
 
 Document the use case at the top of the fixture using:
 
@@ -210,7 +210,7 @@ public class OptionalRelatedRole
 
 The user story explains why the fixture exists. It should describe behaviour from the consumer's perspective rather than implementation details.
 
-### Scenario naming (Gherkin)
+#### Scenario naming (Gherkin)
 
 Each individual test represents a scenario using **Given** / **When** / **Then**.
 
@@ -232,13 +232,13 @@ GivenPersistedRelatedRole_WhenScenarioIsPlayed_ThenRelatedRoleIsResolved()
 
 Keep the name focused on the behaviour. If a scenario needs multiple unrelated `And` clauses to explain the expected result, consider whether it should be split into separate tests.
 
-### Gherkin and AAA
+#### Gherkin and AAA
 
 **Given** / **When** / **Then** describes the scenario from a behavioural perspective.
 
 **AAA** remains the code structure used to implement the test. See [Arrange, Act, Assert](#5-arrange-act-assert).
 
-## 4.3\. Terminology
+### 4.3\. Terminology
 
 Use the following terminology consistently:
 
@@ -261,7 +261,7 @@ await relations.Received(1).Add(Arg.Any<Relation>());
 
 Use NSubstitute when an interaction-verifying mock is appropriate. Prefer a simple concrete fake/stub when it makes the test easier to understand.
 
-# 5\. Arrange, Act, Assert
+## 5\. Arrange, Act, Assert
 
 Use simple AAA comments:
 
@@ -291,7 +291,7 @@ A test normally has one central Act. A broader user-story/use-case test may requ
 
 For exception tests, Act and Assert may be combined. See [Async Tests](#62-async-tests) for an example of testing asynchronous exceptions.
 
-## 5.1\. Assertions
+### 5.1\. Assertions
 
 Use NUnit constraint syntax consistently:
 
@@ -327,9 +327,9 @@ Assert.Multiple(() =>
 
 `Assert.Multiple` should not be used to combine unrelated behaviours in one test.
 
-# 6\. Do's and Don'ts
+## 6\. Do's and Don'ts
 
-## 6.1\. General guidelines
+### 6.1\. General guidelines
 
 - Test one clear behaviour per test.
 - Keep setup as small as reasonably possible.
@@ -340,7 +340,7 @@ Assert.Multiple(() =>
 - Shared helpers should reduce duplication without hiding the state being tested.
 - New tests should follow these conventions. Existing tests can be migrated incrementally while the test suite is restructured.
 
-## 6.2\. Async tests
+### 6.2\. Async tests
 
 Async Backlot behaviour should be tested using `async Task` and `await`.
 
@@ -369,13 +369,13 @@ Assert.That(exception.Message, Does.Contain("permissions"));
 
 This keeps the expected exception type explicit and preserves the original asynchronous behaviour.
 
-## 6.3\. Identifying test cases
+### 6.3\. Identifying test cases
 
 Do not invent input variations arbitrarily. Derive test cases from the contract and the meaningful input categories supported by the code.
 
 Use the following techniques where appropriate:
 
-### Equivalence partitioning
+#### Equivalence partitioning
 
 Group inputs that represent meaningfully different supported behaviours and choose representative cases from each group.
 
@@ -389,11 +389,11 @@ For example, actor representation can be relevant to Backlot behaviour. Backlot 
 
 Only test all representations when the representation is part of the behaviour being verified. Do not repeat the complete actor matrix for every method without a reason.
 
-### Boundary value analysis
+#### Boundary value analysis
 
 For ranges, limits, counts or similar constraints, test meaningful boundaries rather than many arbitrary values.
 
-### Decision tables
+#### Decision tables
 
 When behaviour depends on a combination of conditions, define the relevant combinations before implementing the tests.
 

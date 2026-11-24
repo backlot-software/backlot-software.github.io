@@ -2,7 +2,7 @@
 title: Scenarios
 ---
 
-A scenario is a combination of actions being performed following a script. In the Backlot framework we call these actions compositions. A scenario can be played by calling its endpoint or  programmatically by a play method on the playing actor.
+A scenario is a combination of actions being performed following a script. In the Backlot framework we call these actions compositions. A scenario can be played by calling its endpoint or programmatically by a play method on the playing actor.
 
 ## FuncScenario
 
@@ -99,4 +99,5 @@ public static void CollectComposers(ContainerBuilder builder)
 ```
 
 ## Related articles
+
 [Scenario based programming](https://codevelo.us/2023/08/23/chaplin-scenario-based-programming/)

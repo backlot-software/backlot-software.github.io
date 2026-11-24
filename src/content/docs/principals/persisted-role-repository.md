@@ -8,9 +8,11 @@ This repository ensures that roles persist across application sessions, facilita
 ## Usage and Integration
 
 ### IPersist
+
 All roles that implement the `IPersist` interface/role can be persisted by the `PersistedRoleRepository`.
 
 ### Automatic Persistence
+
 Backlot ensures that any role implementing the `IPersist` interface/role is stored persistently using the configured repository.
 
 ## Types of Persisted Role Repositories

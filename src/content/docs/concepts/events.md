@@ -67,6 +67,7 @@ public override void Incept()
 ```
 
 In this configuration:
+
 - A `DebugWatcher` (namespace `Backlot.Http.Watching`) is set up to watch the `Ending` event in the `Calculate` scenario and post it to the configured webhook endpoint.
 
 ## Summary

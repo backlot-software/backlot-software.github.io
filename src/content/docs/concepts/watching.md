@@ -39,19 +39,19 @@ In the code below the property `Operation1Executed` is added to the scenario `Ca
     public class Calculate : Scenario<IFormula, decimal>
     {
         public Func<int, int, decimal> Operate { get; set; }
-    
+
         public event EventHandler<EventArgs> Operation1Executed;
-    
+
         public Calculate(IFormula role) : base(role)
         {
         }
-    
+
         protected override decimal Exec()
         {
             var operation1Result = Operate.Invoke(Role.Number1, Role.Number2);
-    
+
             Fire(Operation1Executed, nameof(Operation1Executed), new OperationEventArgs(operation1Result));
-    
+
             return SecondOperation(operation1Result);
         }
 
@@ -68,7 +68,7 @@ In the OperationEventArgs the arguments are given for the event. In this example
     public class OperationEventArgs : EventArgs
     {
         public readonly decimal OperationResult;
-    
+
         public OperationEventArgs(decimal operationResult)
         {
             OperationResult = operationResult;
@@ -130,7 +130,7 @@ A generic watcher can watch basically every scenario, for example to log or noti
 ```csharp
     public class LogWatcher<TScenario> : ISceneWatcher<TScenario>
         where TScenario : IScenario
-    {   
+    {
         public void Watch(TScenario scenario)
         {
             scenario.After += (sender,  obj) =>

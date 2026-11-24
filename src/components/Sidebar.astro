@@ -1,0 +1,32 @@
+---
+import Search from '@astrojs/starlight/components/Search.astro';
+import Sidebar from '@astrojs/starlight/components/Sidebar.astro';
+import ChatSidebar from './chat/ChatSidebar.astro';
+import SearchFilters from './search/SearchFilters.astro';
+
+const { id, sidebar } = Astro.locals.starlightRoute;
+
+// Top-level sidebar entry containing the current page, used as the Pagefind "section" filter.
+type SidebarEntry = (typeof sidebar)[number];
+const containsCurrent = (entry: SidebarEntry): boolean =>
+  entry.type === 'link' ? entry.isCurrent : entry.entries.some(containsCurrent);
+const section = sidebar.find(containsCurrent)?.label;
+---
+
+{section && <span hidden data-pagefind-filter={`section:${section}`} data-pagefind-meta={`section:${section}`} />}
+
+{id === 'search' || id === 'chat' ? (
+  <>
+    {id === 'search' ? <SearchFilters /> : <ChatSidebar />}
+    <style is:inline>
+      .sidebar-pane {
+        border-inline-end-color: var(--color-border);
+      }
+    </style>
+  </>
+) : (
+  <>
+    <Search />
+    <Sidebar />
+  </>
+)}
